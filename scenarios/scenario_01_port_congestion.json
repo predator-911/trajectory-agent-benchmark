@@ -1,0 +1,19 @@
+{
+  "alert": {
+    "alert_id": "ALERT-001",
+    "alert_type": "port_congestion",
+    "severity": "high",
+    "origin_region": "APAC-EAST",
+    "destination_region": "US-WEST",
+    "affected_carrier_id": "CARR-001",
+    "description": "Severe congestion reported at origin port; affected carrier cannot maintain schedule.",
+    "extra": {}
+  },
+  "ground_truth": {
+    "expected_node_order": ["risk", "carrier_lookup", "route_optimizer", "validator", "execution", "audit"],
+    "expected_terminal_status": "SUCCESS",
+    "expected_tools_used": ["risk_scorer", "carrier_lookup", "route_optimizer", "route_validator", "execution_simulator"],
+    "expected_entities": ["CARR-003"],
+    "expected_error_injection": null
+  }
+}

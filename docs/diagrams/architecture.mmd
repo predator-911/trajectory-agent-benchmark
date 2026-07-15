@@ -1,0 +1,39 @@
+graph TB
+    subgraph Domain["domain/ (pure, zero I/O)"]
+        Models[models.py]
+        Errors[errors.py]
+    end
+
+    subgraph Ports["ports/ (abstract interfaces)"]
+        ModelProviderPort[ModelProvider]
+        CarrierRepoPort[CarrierRepository]
+    end
+
+    subgraph Core["Core logic (depends only on ports + domain)"]
+        Tools[tools/]
+        Graph[graph/ nodes + edges]
+        Eval[evaluation/]
+    end
+
+    subgraph Adapters["adapters/ (concrete implementations)"]
+        MockProvider[MockProvider]
+        MockProviderFlaky[MockProviderFlaky]
+        ClaudeStub[ClaudeProviderStub]
+        OpenAIStub[OpenAIProviderStub]
+        OllamaStub[OllamaProviderStub]
+        JsonRepo[JsonCarrierRepository]
+    end
+
+    CompositionRoot["build_graph.py (composition root)"]
+
+    Core --> Ports
+    Core --> Domain
+    Adapters --> Ports
+    Adapters --> Domain
+    CompositionRoot --> Adapters
+    CompositionRoot --> Core
+
+    style Core fill:#e8f4ff
+    style Adapters fill:#fff4e6
+    style Ports fill:#f0f0f0
+    style CompositionRoot fill:#e6ffe6

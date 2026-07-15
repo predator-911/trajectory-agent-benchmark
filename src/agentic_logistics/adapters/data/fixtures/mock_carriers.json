@@ -1,0 +1,56 @@
+[
+  {
+    "carrier_id": "CARR-001",
+    "name": "Pacific Swift Logistics",
+    "regions_served": ["APAC-EAST", "US-WEST"],
+    "cost_per_mile": 2.10,
+    "avg_transit_hours": 36.0,
+    "reliability_score": 0.92,
+    "blocklisted": false
+  },
+  {
+    "carrier_id": "CARR-002",
+    "name": "Atlantic Bridge Freight",
+    "regions_served": ["EU-WEST", "US-EAST"],
+    "cost_per_mile": 1.85,
+    "avg_transit_hours": 48.0,
+    "reliability_score": 0.88,
+    "blocklisted": false
+  },
+  {
+    "carrier_id": "CARR-003",
+    "name": "MeridianCargo",
+    "regions_served": ["APAC-EAST", "US-WEST"],
+    "cost_per_mile": 2.45,
+    "avg_transit_hours": 28.0,
+    "reliability_score": 0.81,
+    "blocklisted": false
+  },
+  {
+    "carrier_id": "CARR-004",
+    "name": "Northbound Transit Co",
+    "regions_served": ["EU-WEST", "US-EAST"],
+    "cost_per_mile": 1.70,
+    "avg_transit_hours": 60.0,
+    "reliability_score": 0.65,
+    "blocklisted": false
+  },
+  {
+    "carrier_id": "CARR-005",
+    "name": "Redline Express",
+    "regions_served": ["US-EAST", "US-WEST"],
+    "cost_per_mile": 2.60,
+    "avg_transit_hours": 20.0,
+    "reliability_score": 0.95,
+    "blocklisted": false
+  },
+  {
+    "carrier_id": "CARR-006",
+    "name": "Continental Overland",
+    "regions_served": ["EU-WEST", "EU-EAST"],
+    "cost_per_mile": 1.55,
+    "avg_transit_hours": 40.0,
+    "reliability_score": 0.70,
+    "blocklisted": true
+  }
+]

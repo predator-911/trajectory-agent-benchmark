@@ -1,0 +1,28 @@
+stateDiagram-v2
+    [*] --> TelemetryIngest
+    TelemetryIngest --> Planner
+
+    Planner --> Risk
+
+    Risk --> HighRiskEscalation: risk_score > threshold
+    Risk --> CarrierLookup: risk_score <= threshold
+
+    CarrierLookup --> RouteOptimizer: carriers_found
+    CarrierLookup --> CarrierLookup: retry (transient lookup error, retries < max)
+    CarrierLookup --> NoViableRouteEscalation: no carriers after max retries
+
+    RouteOptimizer --> Validator: candidate_route_proposed
+    RouteOptimizer --> NoViableRouteEscalation: no feasible route
+
+    Validator --> Execution: route_valid
+    Validator --> RouteOptimizer: route_invalid (retry < max)
+    Validator --> NoViableRouteEscalation: route_invalid (retry == max)
+
+    Execution --> Audit: execution_confirmed
+    Execution --> Execution: retry (transient exec error, retries < max)
+    Execution --> ExecutionFailedEscalation: execution failed after max retries
+
+    Audit --> [*]: SUCCESS
+    HighRiskEscalation --> [*]: ESCALATED
+    NoViableRouteEscalation --> [*]: ESCALATED
+    ExecutionFailedEscalation --> [*]: FAILED

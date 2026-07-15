@@ -1,0 +1,33 @@
+sequenceDiagram
+    participant T as TelemetryIngest
+    participant P as Planner
+    participant R as Risk
+    participant C as CarrierLookup
+    participant O as RouteOptimizer
+    participant V as Validator
+    participant E as Execution
+    participant A as Audit
+    participant Reg as ToolRegistry
+
+    T->>P: alert (TelemetryAlert)
+    P->>P: provider.plan(alert)
+    P->>R: state (plan_rationale attached)
+    R->>Reg: call("risk_scorer", args)
+    Reg-->>R: RiskAssessment
+    R->>C: state (risk_assessment attached)
+    C->>Reg: call("carrier_lookup", args)
+    Reg-->>C: list[Carrier] or error
+    Note over C: retries up to max_retries_carrier_lookup on error
+    C->>O: state (candidate_carriers attached)
+    O->>Reg: call("route_optimizer", args)
+    Reg-->>O: (chosen_route, rejected_alternatives)
+    O->>V: state (candidate_route attached)
+    V->>Reg: call("route_validator", args)
+    Reg-->>V: ValidationResult
+    V->>E: state (validation_result attached)
+    E->>Reg: call("execution_simulator", args)
+    Reg-->>E: ExecutionResult or transient error
+    Note over E: retries up to max_retries_execution on transient error
+    E->>A: state (execution_result attached)
+    A->>A: write AuditRecord to reports/audit_logs/
+    A-->>T: final_status = SUCCESS

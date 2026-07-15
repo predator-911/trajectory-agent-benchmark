@@ -1,0 +1,19 @@
+{
+  "alert": {
+    "alert_id": "ALERT-004",
+    "alert_type": "customs_hold",
+    "origin_region": "APAC-EAST",
+    "destination_region": "US-WEST",
+    "affected_carrier_id": null,
+    "description": "Customs hold reported; severity was not populated by the upstream telemetry feed.",
+    "extra": {}
+  },
+  "ground_truth": {
+    "expected_node_order": ["risk", "carrier_lookup", "route_optimizer", "validator", "execution", "audit"],
+    "expected_terminal_status": "SUCCESS",
+    "expected_tools_used": ["risk_scorer", "carrier_lookup", "route_optimizer", "route_validator", "execution_simulator"],
+    "expected_entities": ["CARR-001", "CARR-003"],
+    "expected_error_injection": null,
+    "notes": "Severity is deliberately missing to test graceful default-fallback behavior instead of fabrication."
+  }
+}
